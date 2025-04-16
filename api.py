@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, jsonify
+from flask import Flask, send_from_directory, jsonify, request
 import os
 
 app = Flask(__name__)
@@ -12,6 +12,16 @@ def list_videos():
 @app.route('/detection_videos/<filename>')
 def get_video(filename):
     return send_from_directory(VIDEO_DIR, filename)
+
+@app.route('/videos/<filename>', methods=['DELETE'])
+def delete_video(filename):
+    filepath = os.path.join(VIDEO_DIR, filename)
+    if os.path.exists(filepath):
+        os.remove(filepath)
+        return jsonify({'message': 'File deleted'}), 200
+    else:
+        return jsonify({'error': 'File not found'}), 404
+
 
 def run_flask():
     print("🌐 Starting Flask server on port 5000...")
