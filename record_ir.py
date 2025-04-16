@@ -58,17 +58,19 @@ def record_video():
     video_capture.release()
     cv2.destroyAllWindows()
 
-# === MAIN PROGRAM ===
-try:
-    print("Waiting for object detection...")
-    while True:
-        if GPIO.input(IR_SENSOR_PIN) == 0:  # Object detected (LOW signal)
-            print("Object detected! Starting video recording...")
-            record_video()
-            print("Waiting for next detection...")
+# === IR MONITOR FUNCTION ===
+def ir_monitor():
+    print("📡 Waiting for object detection...")
+    try:
+        print("Waiting for object detection...")
+        while True:
+            if GPIO.input(IR_SENSOR_PIN) == 0:  # Object detected (LOW signal)
+                print("Object detected! Starting video recording...")
+                record_video()
+                print("Waiting for next detection...")
 
-except KeyboardInterrupt:
-    print("Program terminated by user.")
+    except KeyboardInterrupt:
+        print("Program terminated by user.")
 
-finally:
-    GPIO.cleanup()  # Clean up GPIO on exit
+    finally:
+        GPIO.cleanup()  # Clean up GPIO on exit

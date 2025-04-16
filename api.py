@@ -13,5 +13,6 @@ def list_videos():
 def get_video(filename):
     return send_from_directory(VIDEO_DIR, filename)
 
-if __name__ == '__main__':
+def run_flask():
+    print("🌐 Starting Flask server on port 5000...")
     app.run(host='0.0.0.0', port=5000)
